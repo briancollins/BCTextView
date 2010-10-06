@@ -10,7 +10,10 @@
 							 @"Phasellus aliquet scelerisque sodales. Mauris a libero vel "
 							 @"ipsum congue congue at sit amet augue. "
 							 @"1234567890123456789012345678901234567890123456789012345678901234567890 "
-							 @"the previous line was to test character wrapping"] 
+							 @"the previous line was to test character wrapping<br />"
+							 @"and this one tests <a href='http://brisy.info'>links</a>!"
+							 @"<a href='#'>In fact, here is a link that spans<br> multiple lines, <i>why not</i> eh?"
+							 @"it just keeps going and going for a very long time. I wonder why? Testing purposes</a>"] 
 							autorelease];
 	textView.frame = self.view.bounds;
 	textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

@@ -8,6 +8,8 @@
 	NSMutableArray *lines;
 	CGFloat height;
 	CGFloat width;
+	UIColor *textColor;
+	UIColor *linkColor;
 }
 
 - (id)initWithHTML:(NSString *)html;
@@ -16,5 +18,7 @@
 @property (nonatomic) CGFloat fontSize;
 @property (nonatomic) CGFloat height;
 @property (nonatomic) CGFloat width;
+@property (nonatomic, retain) UIColor *textColor;
+@property (nonatomic, retain) UIColor *linkColor;
 
 @end

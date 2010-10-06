@@ -5,7 +5,8 @@
 typedef enum {
 	BCTextNodePlain = 0,
 	BCTextNodeBold = 1,
-	BCTextNodeItalic = 1 << 1
+	BCTextNodeItalic = 1 << 1,
+	BCTextNodeLink = 1 << 2
 } BCTextNodeAttributes;
 
 @interface BCTextFrame ()
@@ -16,7 +17,7 @@ typedef enum {
 @end
 
 @implementation BCTextFrame
-@synthesize fontSize, height, width, lines;
+@synthesize fontSize, height, width, lines, textColor, linkColor;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -27,6 +28,8 @@ typedef enum {
 									   "",
 									   enc,
 									   XML_PARSE_NOERROR | XML_PARSE_NOWARNING);
+		self.textColor = [UIColor blackColor];
+		self.linkColor = [UIColor blueColor];
 	}
 	
 	return self;
@@ -40,7 +43,7 @@ typedef enum {
 	self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
 }
 
-- (void)pushText:(NSString *)text withFont:(UIFont *)font {
+- (void)pushText:(NSString *)text withFont:(UIFont *)font link:(BOOL)link {
 	CGSize size = [text sizeWithFont:font];
 
 	if (size.width > self.currentLine.widthRemaining) {
@@ -61,18 +64,20 @@ typedef enum {
 					partWidth = [textPart sizeWithFont:font].width;
 				} while (partWidth < self.width);
 				
-				[self pushText:lastPart withFont:font];
-				[self pushText:[text substringFromIndex:length - 2] withFont:font];
+				[self pushText:lastPart withFont:font link:link];
+				[self pushText:[text substringFromIndex:length - 2] withFont:font link:link];
 			} else {
-				[self pushText:text withFont:font];
+				[self pushText:text withFont:font link:link];
 			}
 		} else {
-			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font];
+			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font
+					  link:link];
 			[self pushText:[text substringWithRange:NSMakeRange(spaceRange.location + 1, text.length - (spaceRange.location + 1))]
-				  withFont:font];
+				  withFont:font
+					  link:link];
 		}
 	} else {
-		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width] autorelease]
+		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width link:link] autorelease]
 						   height:size.height];
 	}
 }
@@ -85,7 +90,7 @@ typedef enum {
 			UIFont *textFont = [self fontWithAttributes:attr];
 			NSString *text = [NSString stringWithUTF8String:(char *)curNode->content];
 			
-			[self pushText:text withFont:textFont];
+			[self pushText:text withFont:textFont link:(attr & BCTextNodeLink)];
 		} else {
 			BCTextNodeAttributes childrenAttr = attr;
 			
@@ -93,7 +98,9 @@ typedef enum {
 				if (!strcmp((char *)curNode->name, "b")) {
 					childrenAttr |= BCTextNodeBold;
 				} else if (!strcmp((char *)curNode->name, "i")) {
-					childrenAttr |= BCTextNodeItalic;
+					childrenAttr |= BCTextNodeItalic; 
+				} else if (!strcmp((char *)curNode->name, "a")) {
+					childrenAttr |= BCTextNodeLink;
 				} else if (!strcmp((char *)curNode->name, "br")) {
 					[self pushNewline];
 				}
@@ -107,7 +114,7 @@ typedef enum {
 - (void)drawInRect:(CGRect)rect {
 	CGFloat y = 0;
 	for (BCTextLine *line in self.lines) {
-		[line drawAtPoint:CGPointMake(rect.origin.x, rect.origin.y + y)];
+		[line drawAtPoint:CGPointMake(rect.origin.x, rect.origin.y + y) textColor:self.textColor linkColor:self.linkColor];
 		y += line.height;
 	}
 }

@@ -21,9 +21,14 @@
 	return width - pos;
 }
 
-- (void)drawAtPoint:(CGPoint)point {
+- (void)drawAtPoint:(CGPoint)point textColor:(UIColor *)textColor linkColor:(UIColor *)linkColor {
 	int drawPos = 0;
 	for (BCTextNode *node in self.stack) {
+		if (node.link) {
+			[linkColor set];
+		} else {
+			[textColor set];
+		}
 		[node drawAtPoint:CGPointMake(point.x + drawPos, point.y)];
 		drawPos += node.width;
 	}

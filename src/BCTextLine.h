@@ -8,7 +8,7 @@
 }
 
 - (id)initWithWidth:(CGFloat)width;
-- (void)drawAtPoint:(CGPoint)point;
+- (void)drawAtPoint:(CGPoint)point textColor:(UIColor *)textColor linkColor:(UIColor *)linkColor;
 - (void)addNode:(BCTextNode *)node height:(CGFloat)aHeight;
 
 @property (readonly) CGFloat widthRemaining;
