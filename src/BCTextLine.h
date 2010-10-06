@@ -13,6 +13,6 @@
 
 @property (readonly) CGFloat widthRemaining;
 @property (readonly) CGFloat width;
-@property (readonly) CGFloat height;
+@property (nonatomic) CGFloat height;
 
 @end

@@ -38,4 +38,8 @@
 	}
 }
 
+- (void)setHeight:(CGFloat)aHeight { // override automaticaly discovered height
+	height = aHeight;
+}
+
 @end

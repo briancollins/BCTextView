@@ -32,6 +32,14 @@ typedef enum {
 	return self;
 }
 
+- (void)pushNewline {
+	if (self.currentLine.height == 0) {
+		self.currentLine.height = 12;
+	}
+	height += self.currentLine.height;
+	self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
+}
+
 - (void)pushText:(NSString *)text withFont:(UIFont *)font {
 	CGSize size = [text sizeWithFont:font];
 
@@ -40,8 +48,7 @@ typedef enum {
 		
 		// a word that needs to wrap
 		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
-			height += self.currentLine.height;
-			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
+			[self pushNewline];
 			if (size.width > self.width) { // word is too long even for its own line
 				CGFloat partWidth;
 				NSString *textPart;
@@ -87,6 +94,8 @@ typedef enum {
 					childrenAttr |= BCTextNodeBold;
 				} else if (!strcmp((char *)curNode->name, "i")) {
 					childrenAttr |= BCTextNodeItalic;
+				} else if (!strcmp((char *)curNode->name, "br")) {
+					[self pushNewline];
 				}
 			}
 
