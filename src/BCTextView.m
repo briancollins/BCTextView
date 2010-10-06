@@ -16,4 +16,11 @@
 	return self;
 }
 
+- (void)drawRect:(CGRect)rect {
+	[super drawRect:rect];
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	[[UIColor blackColor] set];
+	[self.textFrame drawInContext:context];
+}
+
 @end

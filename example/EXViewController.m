@@ -8,6 +8,8 @@
 							autorelease];
 	textView.frame = self.view.bounds;
 	textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	textView.backgroundColor = [UIColor whiteColor];
+	self.view.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:textView];
 }
 
