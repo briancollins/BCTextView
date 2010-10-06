@@ -24,6 +24,7 @@
 
 - (void)setFrame:(CGRect)aFrame {
 	[super setFrame:aFrame];
+	self.textFrame.width = aFrame.size.width;
 	[self setNeedsDisplay];
 }
 

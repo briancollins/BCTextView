@@ -11,11 +11,12 @@ typedef enum {
 @interface BCTextFrame ()
 - (UIFont *)fontWithAttributes:(BCTextNodeAttributes)attr;
 
+@property (nonatomic, retain) NSMutableArray *lines;
 @property (nonatomic, retain) BCTextLine *currentLine;
 @end
 
 @implementation BCTextFrame
-@synthesize fontSize, currentLine, height;
+@synthesize fontSize, height, width, lines;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -31,41 +32,36 @@ typedef enum {
 	return self;
 }
 
-- (void)pushText:(NSString *)text withFont:(UIFont *)font yPos:(CGFloat *)yPos {
+- (void)pushText:(NSString *)text withFont:(UIFont *)font {
 	CGSize size = [text sizeWithFont:font];
 
 	if (size.width > self.currentLine.widthRemaining) {
-		if ([text hasPrefix:@"Quisque"]) {
-			printf("hmm");
-		}
 		NSRange spaceRange = [text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		
 		// a word that needs to wrap
 		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
-			[self.currentLine drawAtPoint:CGPointMake(0, *yPos)];
-			*yPos += self.currentLine.height;
-			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.currentLine.width] autorelease];
-			if (size.width > self.currentLine.width) { // word is too long even for its own line
+			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
+			if (size.width > self.width) { // word is too long even for its own line
 				CGFloat partWidth;
-				NSString *textPart, *lastPart;
+				NSString *textPart;
+				NSString *lastPart = nil;
 				NSInteger length = 1;
 				
 				do {
 					lastPart = textPart;
 					textPart = [text substringToIndex:length++];
 					partWidth = [textPart sizeWithFont:font].width;
-				} while (partWidth < currentLine.width);
+				} while (partWidth < self.width);
 				
-				[self pushText:lastPart withFont:font yPos:yPos];
-				[self pushText:[text substringFromIndex:length - 2] withFont:font yPos:yPos];
+				[self pushText:lastPart withFont:font];
+				[self pushText:[text substringFromIndex:length - 2] withFont:font];
 			} else {
-				[self pushText:text withFont:font yPos:yPos];
+				[self pushText:text withFont:font];
 			}
 		} else {
-			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font yPos:yPos];
+			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font];
 			[self pushText:[text substringWithRange:NSMakeRange(spaceRange.location + 1, text.length - (spaceRange.location + 1))]
-				  withFont:font
-					  yPos:yPos];
+				  withFont:font];
 		}
 	} else {
 		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width] autorelease]
@@ -73,7 +69,7 @@ typedef enum {
 	}
 }
 
-- (void)drawNode:(xmlNode *)n attributes:(BCTextNodeAttributes)attr yPos:(CGFloat *)yPos {
+- (void)layoutNode:(xmlNode *)n attributes:(BCTextNodeAttributes)attr {
 	if (!n) return;
 	
 	for (xmlNode *curNode = n; curNode; curNode = curNode->next) {
@@ -81,7 +77,7 @@ typedef enum {
 			UIFont *textFont = [self fontWithAttributes:attr];
 			NSString *text = [NSString stringWithUTF8String:(char *)curNode->content];
 			
-			[self pushText:text withFont:textFont yPos:yPos];
+			[self pushText:text withFont:textFont];
 		} else {
 			BCTextNodeAttributes childrenAttr = attr;
 			
@@ -93,18 +89,33 @@ typedef enum {
 				}
 			}
 
-			[self drawNode:curNode->children attributes:childrenAttr yPos:yPos];
+			[self layoutNode:curNode->children attributes:childrenAttr];
 		}
 	}
 }
 
 - (void)drawInRect:(CGRect)rect {
-	self.currentLine = [[[BCTextLine alloc] initWithWidth:rect.size.width] autorelease];
-	[self drawNode:node attributes:BCTextNodePlain yPos:&rect.origin.y];
-	[self.currentLine drawAtPoint:CGPointMake(0, rect.origin.y)];
-	self.height = rect.origin.y + self.currentLine.height;
+	CGFloat y = 0;
+	for (BCTextLine *line in self.lines) {
+		[line drawAtPoint:CGPointMake(rect.origin.x, rect.origin.y + y)];
+		y += line.height;
+	}
 }
 
+- (BCTextLine *)currentLine {
+	return [self.lines lastObject];
+}
+
+- (void)setCurrentLine:(BCTextLine *)aLine {
+	[self.lines addObject:aLine];
+}
+
+- (void)setWidth:(CGFloat)aWidth {
+	width = aWidth;
+	self.lines = [NSMutableArray array];
+	self.currentLine = [[[BCTextLine alloc] initWithWidth:width] autorelease];
+	[self layoutNode:node attributes:BCTextNodePlain];
+}
 
 - (void)dealloc {
 	if (node) 

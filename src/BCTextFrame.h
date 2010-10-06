@@ -5,8 +5,9 @@
 @interface BCTextFrame : NSObject {
 	xmlNode *node;
 	CGFloat fontSize;
-	BCTextLine *currentLine;
+	NSMutableArray *lines;
 	CGFloat height;
+	CGFloat width;
 }
 
 - (id)initWithHTML:(NSString *)html;
@@ -14,5 +15,6 @@
 
 @property (nonatomic) CGFloat fontSize;
 @property (nonatomic) CGFloat height;
+@property (nonatomic) CGFloat width;
 
 @end
