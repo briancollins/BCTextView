@@ -82,15 +82,38 @@ typedef enum {
 	}
 }
 
+- (NSString *)stripWhitespace:(char *)str {
+	char *stripped = malloc(strlen(str) + 1);
+	int i = 0;
+	
+	for (*str; *str != '\0'; *str++) {
+		if (*str == ' ' || *str == '\t' || *str == '\n') {
+			if (whitespaceNeeded) {
+				stripped[i++] = ' ';
+				whitespaceNeeded = NO;
+			}
+		} else {
+			whitespaceNeeded = YES;
+			stripped[i++] = *str;
+		}
+	}
+	stripped[i++] = '\0';
+	NSString *strippedString = [NSString stringWithUTF8String:stripped];
+	free(stripped);
+	return strippedString;
+}
+
 - (void)layoutNode:(xmlNode *)n attributes:(BCTextNodeAttributes)attr {
 	if (!n) return;
 	
 	for (xmlNode *curNode = n; curNode; curNode = curNode->next) {
 		if (curNode->type == XML_TEXT_NODE) {
 			UIFont *textFont = [self fontWithAttributes:attr];
-			NSString *text = [NSString stringWithUTF8String:(char *)curNode->content];
+			
+			NSString *text = [self stripWhitespace:(char *)curNode->content];
 			
 			[self pushText:text withFont:textFont link:(attr & BCTextNodeLink)];
+			whitespaceNeeded = YES;
 		} else {
 			BCTextNodeAttributes childrenAttr = attr;
 			
@@ -103,6 +126,7 @@ typedef enum {
 					childrenAttr |= BCTextNodeLink;
 				} else if (!strcmp((char *)curNode->name, "br")) {
 					[self pushNewline];
+					whitespaceNeeded = NO;
 				}
 			}
 

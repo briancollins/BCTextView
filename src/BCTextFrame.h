@@ -10,6 +10,7 @@
 	CGFloat width;
 	UIColor *textColor;
 	UIColor *linkColor;
+	BOOL whitespaceNeeded;
 }
 
 - (id)initWithHTML:(NSString *)html;
