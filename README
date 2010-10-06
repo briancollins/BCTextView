@@ -12,6 +12,8 @@ Todo:
 - images
 -- delegate image callbacks
 - blockquote
+- underline
+- strikethrough
 
 Nice to have:
 - font tags, with attributes such as font size, color
