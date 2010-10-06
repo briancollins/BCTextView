@@ -11,13 +11,16 @@
 							 @"ipsum congue congue at sit amet augue. "
 							 @"1234567890123456789012345678901234567890123456789012345678901234567890 "
 							 @"the previous line was to test character wrapping<br />"
-							 @"and this one tests <a href='http://brisy.info'>links</a>!"
+							 @"and this one tests <a href='http://brisy.info'>links</a>! "
 							 @"<a href='#'>In fact, here is a link that spans<br> multiple lines, <i>why not</i> eh?"
-							 @"it just keeps going and going for a very long time. I wonder why? Testing purposes</a>"] 
+							 @"it just keeps going and going for a very long time. I wonder why? Testing purposes</a><br />"
+							 @"             leading whitespace   trailing whitespace                         end"] 
 							autorelease];
+	textView.fontSize = 14;
 	textView.frame = self.view.bounds;
 	textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	textView.backgroundColor = [UIColor whiteColor];
+
 	self.view.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:textView];
 }

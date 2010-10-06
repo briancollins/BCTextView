@@ -6,4 +6,6 @@
 
 - (id)initWithHTML:(NSString *)html;
 
+@property (nonatomic) CGFloat fontSize;
+
 @end

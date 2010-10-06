@@ -28,4 +28,12 @@
 	[self setNeedsDisplay];
 }
 
+- (void)setFontSize:(CGFloat)aFontSize {
+	self.textFrame.fontSize = aFontSize;
+}
+
+- (CGFloat)fontSize {
+	return self.textFrame.fontSize;
+}
+
 @end
