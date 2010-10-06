@@ -1,6 +1,4 @@
-Parses a tiny subset* of HTML into a drawable data structure. Because UIWebView is way too slow, and you can't "draw"
-NSAttributedStrings the same way as NSStrings (drawInPoint: drawInRect: etc), and NSAttributedStrings lack useful things 
-such as links and image rendering.
+Parses a tiny subset* of HTML into a drawable data structure. Because UIWebView is way too slow, and you can't "draw" NSAttributedStrings the same way as NSStrings (drawInPoint: drawInRect: etc), and NSAttributedStrings lack useful things such as links and image rendering.
 
 * Supported tags/attributes:
 - b
