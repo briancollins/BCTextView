@@ -79,6 +79,7 @@ typedef enum {
 - (void)drawInRect:(CGRect)rect {
 	self.currentLine = [[[BCTextLine alloc] initWithWidth:rect.size.width] autorelease];
 	[self drawNode:node attributes:BCTextNodePlain yPos:&rect.origin.y];
+	[self.currentLine drawAtPoint:CGPointMake(0, rect.origin.y)];
 }
 
 
