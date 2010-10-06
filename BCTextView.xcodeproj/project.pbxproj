@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D32B76ED125CF16600171E82 /* README in Resources */ = {isa = PBXBuildFile; fileRef = D32B76EC125CF16600171E82 /* README */; };
+		D32F20FF125D2C6900208CA3 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = D32F20FE125D2C6900208CA3 /* test.html */; };
 		D3844721125C983900B5561E /* BCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65CB125B58080035A8C8 /* BCTextView.m */; };
 		D3844722125C983A00B5561E /* BCTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA65CA125B58080035A8C8 /* BCTextView.h */; };
 		D3844723125C983A00B5561E /* BCTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456D125C81F200B5561E /* BCTextNode.m */; };
@@ -40,6 +41,7 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D32B76EC125CF16600171E82 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		D32F20FE125D2C6900208CA3 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		D3844569125C81E400B5561E /* BCTextLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCTextLine.h; sourceTree = "<group>"; };
 		D384456A125C81E400B5561E /* BCTextLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCTextLine.m; sourceTree = "<group>"; };
 		D384456C125C81F200B5561E /* BCTextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCTextNode.h; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		D3AA65A1125B56D70035A8C8 /* example */ = {
 			isa = PBXGroup;
 			children = (
+				D32F20FE125D2C6900208CA3 /* test.html */,
 				D3AA65A2125B56D70035A8C8 /* EXAppDelegate.h */,
 				D3AA65A3125B56D70035A8C8 /* EXAppDelegate.m */,
 				D3AA65A6125B56D70035A8C8 /* Info.plist */,
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D32B76ED125CF16600171E82 /* README in Resources */,
+				D32F20FF125D2C6900208CA3 /* test.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

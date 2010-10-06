@@ -113,7 +113,6 @@ typedef enum {
 			NSString *text = [self stripWhitespace:(char *)curNode->content];
 			
 			[self pushText:text withFont:textFont link:(attr & BCTextNodeLink)];
-			whitespaceNeeded = YES;
 		} else {
 			BCTextNodeAttributes childrenAttr = attr;
 			
