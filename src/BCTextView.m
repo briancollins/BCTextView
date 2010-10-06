@@ -16,11 +16,14 @@
 	return self;
 }
 
+- (void)layoutIfNeeded {
+	[self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
-	CGContextRef context = UIGraphicsGetCurrentContext();
 	[[UIColor blackColor] set];
-	[self.textFrame drawInContext:context];
+	[self.textFrame drawInRect:self.bounds];
 }
 
 @end

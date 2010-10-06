@@ -1,4 +1,6 @@
 #import "BCTextFrame.h"
+#import "BCTextLine.h"
+#import "BCTextNode.h"
 
 typedef enum {
 	BCTextNodePlain = 0,
@@ -6,21 +8,14 @@ typedef enum {
 	BCTextNodeItalic = 1 << 1
 } BCTextNodeAttributes;
 
-typedef struct {
-	BCTextNodeAttributes attr;
-	size_t pos;
-} BCTextNodeState;
-
-typedef struct {
-	CGPoint pos;
-} BCLineState;
-
 @interface BCTextFrame ()
 - (UIFont *)fontWithAttributes:(BCTextNodeAttributes)attr;
+
+@property (nonatomic, retain) BCTextLine *currentLine;
 @end
 
 @implementation BCTextFrame
-@synthesize fontSize;
+@synthesize fontSize, currentLine;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -36,36 +31,54 @@ typedef struct {
 	return self;
 }
 
-- (void)drawNode:(xmlNode *)n inContext:(CGContextRef)context state:(BCTextNodeState)state lineState:(BCLineState *)lineState {
+- (void)pushText:(NSString *)text withFont:(UIFont *)font yPos:(CGFloat *)yPos {
+	CGSize size = [text sizeWithFont:font];
+	if (size.width > self.currentLine.widthRemaining) {
+		NSRange spaceRange = [text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
+			[self.currentLine drawAtPoint:CGPointMake(0, *yPos)];
+			*yPos += self.currentLine.height;
+			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.currentLine.width] autorelease];
+		} else {
+			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font yPos:yPos];
+			[self pushText:[text substringWithRange:NSMakeRange(spaceRange.location + 1, text.length - (spaceRange.location + 1))]
+				  withFont:font
+					  yPos:yPos];
+		}
+	} else {
+		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width] autorelease]
+						   height:size.height];
+	}
+}
+
+- (void)drawNode:(xmlNode *)n attributes:(BCTextNodeAttributes)attr yPos:(CGFloat *)yPos {
 	if (!n) return;
 	
 	for (xmlNode *curNode = n; curNode; curNode = curNode->next) {
 		if (curNode->type == XML_TEXT_NODE) {
-			UIFont *textFont = [self fontWithAttributes:state.attr];
+			UIFont *textFont = [self fontWithAttributes:attr];
 			NSString *text = [NSString stringWithUTF8String:(char *)curNode->content];
 			
-			[text drawAtPoint:lineState->pos withFont:textFont];
-			lineState->pos.x += [text sizeWithFont:textFont].width;
+			[self pushText:text withFont:textFont yPos:yPos];
 		} else {
-			BCTextNodeState childrenState = state;
+			BCTextNodeAttributes childrenAttr = attr;
 			
 			if (curNode->name) {
 				if (!strcmp((char *)curNode->name, "b")) {
-					childrenState.attr |= BCTextNodeBold;
+					childrenAttr |= BCTextNodeBold;
 				} else if (!strcmp((char *)curNode->name, "i")) {
-					childrenState.attr |= BCTextNodeItalic;
+					childrenAttr |= BCTextNodeItalic;
 				}
 			}
 
-			[self drawNode:curNode->children inContext:context state:childrenState lineState:lineState];
+			[self drawNode:curNode->children attributes:childrenAttr yPos:yPos];
 		}
 	}
 }
 
-- (void)drawInContext:(CGContextRef)context {
-	BCTextNodeState state = {BCTextNodePlain, 0};
-	BCLineState lineState = {CGPointMake(0, 0)};
-	[self drawNode:node inContext:context state:state lineState:&lineState];
+- (void)drawInRect:(CGRect)rect {
+	self.currentLine = [[[BCTextLine alloc] initWithWidth:rect.size.width] autorelease];
+	[self drawNode:node attributes:BCTextNodePlain yPos:&rect.origin.y];
 }
 
 

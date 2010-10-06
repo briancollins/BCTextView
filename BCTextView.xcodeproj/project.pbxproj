@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D384456B125C81E400B5561E /* BCTextLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456A125C81E400B5561E /* BCTextLine.m */; };
+		D384456E125C81F200B5561E /* BCTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456D125C81F200B5561E /* BCTextNode.m */; };
 		D3AA65A9125B56D70035A8C8 /* EXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65A3125B56D70035A8C8 /* EXAppDelegate.m */; };
 		D3AA65AC125B56D70035A8C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65A7125B56D70035A8C8 /* main.m */; };
 		D3AA65CC125B58080035A8C8 /* BCTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA65CA125B58080035A8C8 /* BCTextView.h */; };
@@ -34,6 +36,10 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D3844569125C81E400B5561E /* BCTextLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCTextLine.h; sourceTree = "<group>"; };
+		D384456A125C81E400B5561E /* BCTextLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCTextLine.m; sourceTree = "<group>"; };
+		D384456C125C81F200B5561E /* BCTextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCTextNode.h; sourceTree = "<group>"; };
+		D384456D125C81F200B5561E /* BCTextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCTextNode.m; sourceTree = "<group>"; };
 		D3AA6549125B563B0035A8C8 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3AA6553125B56600035A8C8 /* libBCTextView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCTextView.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3AA65A2125B56D70035A8C8 /* EXAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXAppDelegate.h; sourceTree = "<group>"; };
@@ -111,6 +117,10 @@
 				D3AA65D0125B584F0035A8C8 /* prefix.pch */,
 				D3AA661B125B5ADA0035A8C8 /* BCTextFrame.h */,
 				D3AA661C125B5ADA0035A8C8 /* BCTextFrame.m */,
+				D3844569125C81E400B5561E /* BCTextLine.h */,
+				D384456A125C81E400B5561E /* BCTextLine.m */,
+				D384456C125C81F200B5561E /* BCTextNode.h */,
+				D384456D125C81F200B5561E /* BCTextNode.m */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -223,6 +233,8 @@
 				D3AA65A9125B56D70035A8C8 /* EXAppDelegate.m in Sources */,
 				D3AA65AC125B56D70035A8C8 /* main.m in Sources */,
 				D3AA6646125B5C3E0035A8C8 /* EXViewController.m in Sources */,
+				D384456B125C81E400B5561E /* BCTextLine.m in Sources */,
+				D384456E125C81F200B5561E /* BCTextNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
