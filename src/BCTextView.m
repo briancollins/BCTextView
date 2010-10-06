@@ -16,14 +16,15 @@
 	return self;
 }
 
-- (void)layoutIfNeeded {
-	[self setNeedsDisplay];
-}
-
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
 	[[UIColor blackColor] set];
 	[self.textFrame drawInRect:self.bounds];
+}
+
+- (void)setFrame:(CGRect)aFrame {
+	[super setFrame:aFrame];
+	[self setNeedsDisplay];
 }
 
 @end
