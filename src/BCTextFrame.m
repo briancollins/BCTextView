@@ -39,11 +39,28 @@ typedef enum {
 			printf("hmm");
 		}
 		NSRange spaceRange = [text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		
+		// a word that needs to wrap
 		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
 			[self.currentLine drawAtPoint:CGPointMake(0, *yPos)];
 			*yPos += self.currentLine.height;
 			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.currentLine.width] autorelease];
-			[self pushText:text withFont:font yPos:yPos];
+			if (size.width > self.currentLine.width) { // word is too long even for its own line
+				CGFloat partWidth;
+				NSString *textPart, *lastPart;
+				NSInteger length = 1;
+				
+				do {
+					lastPart = textPart;
+					textPart = [text substringToIndex:length++];
+					partWidth = [textPart sizeWithFont:font].width;
+				} while (partWidth < currentLine.width);
+				
+				[self pushText:lastPart withFont:font yPos:yPos];
+				[self pushText:[text substringFromIndex:length - 2] withFont:font yPos:yPos];
+			} else {
+				[self pushText:text withFont:font yPos:yPos];
+			}
 		} else {
 			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font yPos:yPos];
 			[self pushText:[text substringWithRange:NSMakeRange(spaceRange.location + 1, text.length - (spaceRange.location + 1))]
@@ -51,9 +68,6 @@ typedef enum {
 					  yPos:yPos];
 		}
 	} else {
-		if ([text hasPrefix:@"Quisque"]) {
-			printf("hmm");
-		}
 		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width] autorelease]
 						   height:size.height];
 	}
