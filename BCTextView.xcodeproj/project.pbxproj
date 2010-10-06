@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D384456B125C81E400B5561E /* BCTextLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456A125C81E400B5561E /* BCTextLine.m */; };
-		D384456E125C81F200B5561E /* BCTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456D125C81F200B5561E /* BCTextNode.m */; };
+		D3844721125C983900B5561E /* BCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65CB125B58080035A8C8 /* BCTextView.m */; };
+		D3844722125C983A00B5561E /* BCTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA65CA125B58080035A8C8 /* BCTextView.h */; };
+		D3844723125C983A00B5561E /* BCTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456D125C81F200B5561E /* BCTextNode.m */; };
+		D3844724125C983B00B5561E /* BCTextNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D384456C125C81F200B5561E /* BCTextNode.h */; };
+		D3844725125C983B00B5561E /* BCTextLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456A125C81E400B5561E /* BCTextLine.m */; };
+		D3844726125C983C00B5561E /* BCTextLine.h in Headers */ = {isa = PBXBuildFile; fileRef = D3844569125C81E400B5561E /* BCTextLine.h */; };
+		D3844728125C983D00B5561E /* BCTextFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA661B125B5ADA0035A8C8 /* BCTextFrame.h */; };
+		D3844729125C983E00B5561E /* BCTextFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA661C125B5ADA0035A8C8 /* BCTextFrame.m */; };
 		D3AA65A9125B56D70035A8C8 /* EXAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65A3125B56D70035A8C8 /* EXAppDelegate.m */; };
 		D3AA65AC125B56D70035A8C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65A7125B56D70035A8C8 /* main.m */; };
-		D3AA65CC125B58080035A8C8 /* BCTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA65CA125B58080035A8C8 /* BCTextView.h */; };
-		D3AA65CD125B58080035A8C8 /* BCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65CB125B58080035A8C8 /* BCTextView.m */; };
 		D3AA65D1125B584F0035A8C8 /* prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = D3AA65D0125B584F0035A8C8 /* prefix.pch */; };
 		D3AA65DC125B58F40035A8C8 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AA65DA125B58ED0035A8C8 /* libxml2.2.7.3.dylib */; };
-		D3AA661D125B5ADA0035A8C8 /* BCTextFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA661B125B5ADA0035A8C8 /* BCTextFrame.h */; };
-		D3AA661E125B5ADA0035A8C8 /* BCTextFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA661C125B5ADA0035A8C8 /* BCTextFrame.m */; };
 		D3AA6646125B5C3E0035A8C8 /* EXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA6645125B5C3E0035A8C8 /* EXViewController.m */; };
 		D3AA666A125B5DF00035A8C8 /* libBCTextView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AA6553125B56600035A8C8 /* libBCTextView.a */; };
 		D3AA666D125B5DFA0035A8C8 /* libxml2.2.7.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AA65DA125B58ED0035A8C8 /* libxml2.2.7.3.dylib */; };
@@ -146,9 +148,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3AA65CC125B58080035A8C8 /* BCTextView.h in Headers */,
 				D3AA65D1125B584F0035A8C8 /* prefix.pch in Headers */,
-				D3AA661D125B5ADA0035A8C8 /* BCTextFrame.h in Headers */,
+				D3844722125C983A00B5561E /* BCTextView.h in Headers */,
+				D3844724125C983B00B5561E /* BCTextNode.h in Headers */,
+				D3844726125C983C00B5561E /* BCTextLine.h in Headers */,
+				D3844728125C983D00B5561E /* BCTextFrame.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,8 +237,6 @@
 				D3AA65A9125B56D70035A8C8 /* EXAppDelegate.m in Sources */,
 				D3AA65AC125B56D70035A8C8 /* main.m in Sources */,
 				D3AA6646125B5C3E0035A8C8 /* EXViewController.m in Sources */,
-				D384456B125C81E400B5561E /* BCTextLine.m in Sources */,
-				D384456E125C81F200B5561E /* BCTextNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,8 +244,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3AA65CD125B58080035A8C8 /* BCTextView.m in Sources */,
-				D3AA661E125B5ADA0035A8C8 /* BCTextFrame.m in Sources */,
+				D3844721125C983900B5561E /* BCTextView.m in Sources */,
+				D3844723125C983A00B5561E /* BCTextNode.m in Sources */,
+				D3844725125C983B00B5561E /* BCTextLine.m in Sources */,
+				D3844729125C983E00B5561E /* BCTextFrame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
