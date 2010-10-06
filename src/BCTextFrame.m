@@ -37,7 +37,7 @@ typedef enum {
 
 - (void)pushNewline {
 	if (self.currentLine.height == 0) {
-		self.currentLine.height = 12;
+		self.currentLine.height = self.fontSize;
 	}
 	height += self.currentLine.height;
 	self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
