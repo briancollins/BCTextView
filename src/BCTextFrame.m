@@ -40,6 +40,7 @@ typedef enum {
 		
 		// a word that needs to wrap
 		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
+			height += self.currentLine.height;
 			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
 			if (size.width > self.width) { // word is too long even for its own line
 				CGFloat partWidth;
@@ -114,7 +115,9 @@ typedef enum {
 	width = aWidth;
 	self.lines = [NSMutableArray array];
 	self.currentLine = [[[BCTextLine alloc] initWithWidth:width] autorelease];
+	height = 0;
 	[self layoutNode:node attributes:BCTextNodePlain];
+	height += self.currentLine.height;
 }
 
 - (void)dealloc {
