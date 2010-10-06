@@ -15,7 +15,7 @@ typedef enum {
 @end
 
 @implementation BCTextFrame
-@synthesize fontSize, currentLine;
+@synthesize fontSize, currentLine, height;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -33,12 +33,17 @@ typedef enum {
 
 - (void)pushText:(NSString *)text withFont:(UIFont *)font yPos:(CGFloat *)yPos {
 	CGSize size = [text sizeWithFont:font];
+
 	if (size.width > self.currentLine.widthRemaining) {
+		if ([text hasPrefix:@"Quisque"]) {
+			printf("hmm");
+		}
 		NSRange spaceRange = [text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
 			[self.currentLine drawAtPoint:CGPointMake(0, *yPos)];
 			*yPos += self.currentLine.height;
 			self.currentLine = [[[BCTextLine alloc] initWithWidth:self.currentLine.width] autorelease];
+			[self pushText:text withFont:font yPos:yPos];
 		} else {
 			[self pushText:[text substringWithRange:NSMakeRange(0, spaceRange.location + 1)] withFont:font yPos:yPos];
 			[self pushText:[text substringWithRange:NSMakeRange(spaceRange.location + 1, text.length - (spaceRange.location + 1))]
@@ -46,6 +51,9 @@ typedef enum {
 					  yPos:yPos];
 		}
 	} else {
+		if ([text hasPrefix:@"Quisque"]) {
+			printf("hmm");
+		}
 		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width] autorelease]
 						   height:size.height];
 	}
@@ -80,6 +88,7 @@ typedef enum {
 	self.currentLine = [[[BCTextLine alloc] initWithWidth:rect.size.width] autorelease];
 	[self drawNode:node attributes:BCTextNodePlain yPos:&rect.origin.y];
 	[self.currentLine drawAtPoint:CGPointMake(0, rect.origin.y)];
+	self.height = rect.origin.y + self.currentLine.height;
 }
 
 
