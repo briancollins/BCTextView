@@ -139,6 +139,9 @@ typedef enum {
 	for (BCTextLine *line in self.lines) {
 		[line drawAtPoint:CGPointMake(rect.origin.x, rect.origin.y + y) textColor:self.textColor linkColor:self.linkColor];
 		y += line.height;
+		if (y > rect.size.height) {
+			return;
+		}
 	}
 }
 
