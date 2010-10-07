@@ -1,6 +1,7 @@
 #import "BCTextFrame.h"
 #import "BCTextLine.h"
 #import "BCTextNode.h"
+#import "BCImageNode.h"
 
 typedef enum {
 	BCTextNodePlain = 0,
@@ -17,7 +18,7 @@ typedef enum {
 @end
 
 @implementation BCTextFrame
-@synthesize fontSize, height, width, lines, textColor, linkColor;
+@synthesize fontSize, height, width, lines, textColor, linkColor, delegate;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -77,8 +78,19 @@ typedef enum {
 					  link:link];
 		}
 	} else {
-		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width link:link] autorelease]
+		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width height:size.height link:link] autorelease]
 						   height:size.height];
+	}
+}
+
+- (void)pushImage:(NSString *)src {
+	if ([(NSObject *)self.delegate respondsToSelector:@selector(imageForURL:)]) {
+		UIImage *img = [self.delegate imageForURL:src];
+		if (img.size.width > self.currentLine.widthRemaining) {
+			[self pushNewline];
+		}
+		[self.currentLine addNode:[[[BCImageNode alloc] initWithImage:img] autorelease] height:img.size.height];
+		whitespaceNeeded = YES;
 	}
 }
 
@@ -126,6 +138,9 @@ typedef enum {
 				} else if (!strcmp((char *)curNode->name, "br")) {
 					[self pushNewline];
 					whitespaceNeeded = NO;
+				} else if (!strcmp((char *)curNode->name, "img")) {
+					NSString *src = [NSString stringWithUTF8String:(char *)xmlGetProp(curNode, (xmlChar *)"src")];
+					[self pushImage:src];
 				}
 			}
 

@@ -5,6 +5,7 @@
 }
 
 - (id)initWithHTML:(NSString *)html;
+- (UIImage *)imageForURL:(NSString *)URL;
 
 @property (nonatomic) CGFloat fontSize;
 

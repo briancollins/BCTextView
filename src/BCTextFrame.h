@@ -1,6 +1,8 @@
 #import <libxml/HTMLparser.h>
 
 @class BCTextLine;
+@protocol BCTextFrameDelegate;
+
 
 @interface BCTextFrame : NSObject {
 	xmlNode *node;
@@ -11,6 +13,7 @@
 	UIColor *textColor;
 	UIColor *linkColor;
 	BOOL whitespaceNeeded;
+	id <BCTextFrameDelegate> delegate;
 }
 
 - (id)initWithHTML:(NSString *)html;
@@ -21,5 +24,13 @@
 @property (nonatomic) CGFloat width;
 @property (nonatomic, retain) UIColor *textColor;
 @property (nonatomic, retain) UIColor *linkColor;
+@property (nonatomic, assign) id <BCTextFrameDelegate> delegate;
 
 @end
+
+@protocol BCTextFrameDelegate
+
+- (UIImage *)imageForURL:(NSString *)url;
+
+@end
+

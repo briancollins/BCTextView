@@ -12,6 +12,7 @@
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
 		self.textFrame = [[[BCTextFrame alloc] initWithHTML:html] autorelease];
+		self.textFrame.delegate = (id <BCTextFrameDelegate>)self;
 	}
 	return self;
 }
@@ -34,6 +35,10 @@
 
 - (CGFloat)fontSize {
 	return self.textFrame.fontSize;
+}
+
+- (UIImage *)imageForURL:(NSString *)URL {
+	return [UIImage imageNamed:@"emot-sweden.gif"];
 }
 
 @end

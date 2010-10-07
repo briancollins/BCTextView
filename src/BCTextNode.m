@@ -2,14 +2,15 @@
 
 
 @implementation BCTextNode
-@synthesize text, font, width, link;
+@synthesize text, font, width, link, height;
 
-- (id)initWithText:(NSString *)aText font:(UIFont *)aFont width:(CGFloat)aWidth link:(BOOL)isLink {
+- (id)initWithText:(NSString *)aText font:(UIFont *)aFont width:(CGFloat)aWidth height:(CGFloat)aHeight link:(BOOL)isLink {
 	if ((self = [super init])) {
 		self.text = aText;
 		self.font = aFont;
 		self.link = isLink;
 		width = aWidth;
+		height = aHeight;
 	}
 	
 	return self;

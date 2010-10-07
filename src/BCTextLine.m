@@ -24,12 +24,15 @@
 - (void)drawAtPoint:(CGPoint)point textColor:(UIColor *)textColor linkColor:(UIColor *)linkColor {
 	int drawPos = 0;
 	for (BCTextNode *node in self.stack) {
-		if (node.link) {
-			[linkColor set];
-		} else {
-			[textColor set];
+		if ([node isKindOfClass:[BCTextNode class]]) {
+			if (node.link) {
+				[linkColor set];
+			} else {
+				[textColor set];
+			}
 		}
-		[node drawAtPoint:CGPointMake(point.x + drawPos, point.y)];
+ 
+		[node drawAtPoint:CGPointMake(point.x + drawPos, point.y + ((self.height / 2) - (node.height / 2)))];
 		drawPos += node.width;
 	}
 }

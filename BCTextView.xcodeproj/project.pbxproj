@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		D32B76ED125CF16600171E82 /* README in Resources */ = {isa = PBXBuildFile; fileRef = D32B76EC125CF16600171E82 /* README */; };
 		D32F20FF125D2C6900208CA3 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = D32F20FE125D2C6900208CA3 /* test.html */; };
+		D3496963125DE9C50008039B /* emot-sweden.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3496962125DE9C50008039B /* emot-sweden.gif */; };
+		D3496974125DEA770008039B /* BCImageNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D3496972125DEA770008039B /* BCImageNode.h */; };
+		D3496975125DEA770008039B /* BCImageNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D3496973125DEA770008039B /* BCImageNode.m */; };
+		D349697F125DEB1C0008039B /* BCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D349697D125DEB1C0008039B /* BCNode.h */; };
+		D3496980125DEB1C0008039B /* BCNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D349697E125DEB1C0008039B /* BCNode.m */; };
 		D3844721125C983900B5561E /* BCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AA65CB125B58080035A8C8 /* BCTextView.m */; };
 		D3844722125C983A00B5561E /* BCTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AA65CA125B58080035A8C8 /* BCTextView.h */; };
 		D3844723125C983A00B5561E /* BCTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D384456D125C81F200B5561E /* BCTextNode.m */; };
@@ -42,6 +47,11 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D32B76EC125CF16600171E82 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		D32F20FE125D2C6900208CA3 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		D3496962125DE9C50008039B /* emot-sweden.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "emot-sweden.gif"; sourceTree = "<group>"; };
+		D3496972125DEA770008039B /* BCImageNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCImageNode.h; sourceTree = "<group>"; };
+		D3496973125DEA770008039B /* BCImageNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCImageNode.m; sourceTree = "<group>"; };
+		D349697D125DEB1C0008039B /* BCNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNode.h; sourceTree = "<group>"; };
+		D349697E125DEB1C0008039B /* BCNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCNode.m; sourceTree = "<group>"; };
 		D3844569125C81E400B5561E /* BCTextLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCTextLine.h; sourceTree = "<group>"; };
 		D384456A125C81E400B5561E /* BCTextLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCTextLine.m; sourceTree = "<group>"; };
 		D384456C125C81F200B5561E /* BCTextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCTextNode.h; sourceTree = "<group>"; };
@@ -128,6 +138,10 @@
 				D384456A125C81E400B5561E /* BCTextLine.m */,
 				D384456C125C81F200B5561E /* BCTextNode.h */,
 				D384456D125C81F200B5561E /* BCTextNode.m */,
+				D3496972125DEA770008039B /* BCImageNode.h */,
+				D3496973125DEA770008039B /* BCImageNode.m */,
+				D349697D125DEB1C0008039B /* BCNode.h */,
+				D349697E125DEB1C0008039B /* BCNode.m */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -135,6 +149,7 @@
 		D3AA65A1125B56D70035A8C8 /* example */ = {
 			isa = PBXGroup;
 			children = (
+				D3496962125DE9C50008039B /* emot-sweden.gif */,
 				D32F20FE125D2C6900208CA3 /* test.html */,
 				D3AA65A2125B56D70035A8C8 /* EXAppDelegate.h */,
 				D3AA65A3125B56D70035A8C8 /* EXAppDelegate.m */,
@@ -159,6 +174,8 @@
 				D3844724125C983B00B5561E /* BCTextNode.h in Headers */,
 				D3844726125C983C00B5561E /* BCTextLine.h in Headers */,
 				D3844728125C983D00B5561E /* BCTextFrame.h in Headers */,
+				D3496974125DEA770008039B /* BCImageNode.h in Headers */,
+				D349697F125DEB1C0008039B /* BCNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +249,7 @@
 			files = (
 				D32B76ED125CF16600171E82 /* README in Resources */,
 				D32F20FF125D2C6900208CA3 /* test.html in Resources */,
+				D3496963125DE9C50008039B /* emot-sweden.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +274,8 @@
 				D3844723125C983A00B5561E /* BCTextNode.m in Sources */,
 				D3844725125C983B00B5561E /* BCTextLine.m in Sources */,
 				D3844729125C983E00B5561E /* BCTextFrame.m in Sources */,
+				D3496975125DEA770008039B /* BCImageNode.m in Sources */,
+				D3496980125DEB1C0008039B /* BCNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
