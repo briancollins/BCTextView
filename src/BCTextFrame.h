@@ -6,6 +6,7 @@
 
 @interface BCTextFrame : NSObject {
 	xmlNode *node;
+	xmlNode *doc;
 	CGFloat fontSize;
 	NSMutableArray *lines;
 	CGFloat height;
@@ -20,6 +21,7 @@
 }
 
 - (id)initWithHTML:(NSString *)html;
+- (id)initWithXmlNode:(xmlNode *)aNode;
 - (void)drawInRect:(CGRect)rect;
 - (void)touchBeganAtPoint:(CGPoint)point;
 - (void)touchEndedAtPoint:(CGPoint)point;

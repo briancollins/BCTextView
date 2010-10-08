@@ -21,17 +21,34 @@ typedef enum {
 @implementation BCTextFrame
 @synthesize fontSize, height, width, lines, textColor, linkColor, delegate, indented, links;
 
-- (id)initWithHTML:(NSString *)html {
+- (id)init {
 	if ((self = [super init])) {
+		self.textColor = [UIColor blackColor];
+		self.linkColor = [UIColor blueColor];
+	}
+	
+	return self;
+}
+
+- (id)initWithHTML:(NSString *)html {
+	if ((self = [self init])) {
 		CFStringEncoding cfenc = CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding);
 		CFStringRef cfencstr = CFStringConvertEncodingToIANACharSetName(cfenc);
 		const char *enc = CFStringGetCStringPtr(cfencstr, 0);
-		node = (xmlNode *)htmlReadDoc((xmlChar *)[html UTF8String],
+		// let's set our xml doc to doc because we don't want to free node
+		// (which we didn't alloc) but we want to free a doc we alloced
+		doc = node = (xmlNode *)htmlReadDoc((xmlChar *)[html UTF8String],
 									   "",
 									   enc,
 									   XML_PARSE_NOERROR | XML_PARSE_NOWARNING);
-		self.textColor = [UIColor blackColor];
-		self.linkColor = [UIColor blueColor];
+	}
+	
+	return self;
+}
+
+- (id)initWithXmlNode:(xmlNode *)aNode {
+	if ((self = [self init])) {
+		node = aNode;
 	}
 	
 	return self;
@@ -156,7 +173,7 @@ typedef enum {
 - (NSString *)stripWhitespace:(char *)str {
 	char *stripped = malloc(strlen(str) + 1);
 	int i = 0;
-	for (; *str != '\0'; *str++) {
+	for (*str; *str != '\0'; *str++) {
 		if (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r') {
 			if (whitespaceNeeded) {
 				stripped[i++] = ' ';
@@ -266,8 +283,8 @@ typedef enum {
 }
 
 - (void)dealloc {
-	if (node) 
-		xmlFreeDoc((xmlDoc *)node);
+	if (doc) 
+		xmlFreeDoc((xmlDoc *)doc);
 	
 	node = NULL;
 	self.links = nil;
