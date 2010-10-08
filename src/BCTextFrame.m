@@ -156,8 +156,7 @@ typedef enum {
 - (NSString *)stripWhitespace:(char *)str {
 	char *stripped = malloc(strlen(str) + 1);
 	int i = 0;
-	
-	for (*str; *str != '\0'; *str++) {
+	for (; *str != '\0'; *str++) {
 		if (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r') {
 			if (whitespaceNeeded) {
 				stripped[i++] = ' ';

@@ -365,7 +365,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gastown Labs";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gastown Labs";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -383,6 +384,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Example;
+				PROVISIONING_PROFILE = "14F8674E-80D7-421F-8E19-67E352D0B1F3";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "14F8674E-80D7-421F-8E19-67E352D0B1F3";
 				SDKROOT = iphoneos4.1;
 				ZERO_LINK = NO;
 			};
@@ -396,7 +399,9 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = src/prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
+				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=030103";
 				OTHER_LDFLAGS = (
 					"-framework",
 					QuartzCore,
@@ -414,7 +419,9 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = src/prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
+				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=030103";
 				OTHER_LDFLAGS = (
 					"-framework",
 					QuartzCore,
