@@ -4,7 +4,7 @@
 	UIImage *image;
 }
 
-- (id)initWithImage:(UIImage *)img;
+- (id)initWithImage:(UIImage *)img link:(BOOL)isLink;
 @property (nonatomic, retain) UIImage *image;
 
 @end

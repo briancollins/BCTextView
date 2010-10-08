@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D31F59C7125E5118002E2C67 /* BCBlockBorder.h in Headers */ = {isa = PBXBuildFile; fileRef = D31F59C5125E5118002E2C67 /* BCBlockBorder.h */; };
+		D31F59C8125E5118002E2C67 /* BCBlockBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = D31F59C6125E5118002E2C67 /* BCBlockBorder.m */; };
+		D31F59FB125E5264002E2C67 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31F59FA125E5264002E2C67 /* QuartzCore.framework */; };
+		D31F5A12125E526E002E2C67 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D31F59FA125E5264002E2C67 /* QuartzCore.framework */; };
+		D31F5A4A125E52FC002E2C67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D31F5A4B125E52FD002E2C67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D32B76ED125CF16600171E82 /* README in Resources */ = {isa = PBXBuildFile; fileRef = D32B76EC125CF16600171E82 /* README */; };
 		D32F20FF125D2C6900208CA3 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = D32F20FE125D2C6900208CA3 /* test.html */; };
 		D3496963125DE9C50008039B /* emot-sweden.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3496962125DE9C50008039B /* emot-sweden.gif */; };
@@ -45,6 +51,9 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D31F59C5125E5118002E2C67 /* BCBlockBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCBlockBorder.h; sourceTree = "<group>"; };
+		D31F59C6125E5118002E2C67 /* BCBlockBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCBlockBorder.m; sourceTree = "<group>"; };
+		D31F59FA125E5264002E2C67 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D32B76EC125CF16600171E82 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		D32F20FE125D2C6900208CA3 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 		D3496962125DE9C50008039B /* emot-sweden.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "emot-sweden.gif"; sourceTree = "<group>"; };
@@ -80,6 +89,8 @@
 			files = (
 				D3AA666A125B5DF00035A8C8 /* libBCTextView.a in Frameworks */,
 				D3AA666D125B5DFA0035A8C8 /* libxml2.2.7.3.dylib in Frameworks */,
+				D31F59FB125E5264002E2C67 /* QuartzCore.framework in Frameworks */,
+				D31F5A4B125E52FD002E2C67 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +99,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3AA65DC125B58F40035A8C8 /* libxml2.2.7.3.dylib in Frameworks */,
+				D31F5A12125E526E002E2C67 /* QuartzCore.framework in Frameworks */,
+				D31F5A4A125E52FC002E2C67 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +135,7 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				D3AA65DA125B58ED0035A8C8 /* libxml2.2.7.3.dylib */,
+				D31F59FA125E5264002E2C67 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -142,6 +156,8 @@
 				D3496973125DEA770008039B /* BCImageNode.m */,
 				D349697D125DEB1C0008039B /* BCNode.h */,
 				D349697E125DEB1C0008039B /* BCNode.m */,
+				D31F59C5125E5118002E2C67 /* BCBlockBorder.h */,
+				D31F59C6125E5118002E2C67 /* BCBlockBorder.m */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -176,6 +192,7 @@
 				D3844728125C983D00B5561E /* BCTextFrame.h in Headers */,
 				D3496974125DEA770008039B /* BCImageNode.h in Headers */,
 				D349697F125DEB1C0008039B /* BCNode.h in Headers */,
+				D31F59C7125E5118002E2C67 /* BCBlockBorder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +293,7 @@
 				D3844729125C983E00B5561E /* BCTextFrame.m in Sources */,
 				D3496975125DEA770008039B /* BCImageNode.m in Sources */,
 				D3496980125DEB1C0008039B /* BCNode.m in Sources */,
+				D31F59C8125E5118002E2C67 /* BCBlockBorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +349,8 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
+					QuartzCore,
+					"-framework",
 					Foundation,
 					"-framework",
 					UIKit,
@@ -355,6 +375,8 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
+					QuartzCore,
+					"-framework",
 					Foundation,
 					"-framework",
 					UIKit,
@@ -375,6 +397,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = src/prefix.pch;
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
+				OTHER_LDFLAGS = (
+					"-framework",
+					QuartzCore,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = BCTextView;
 			};
@@ -389,6 +415,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = src/prefix.pch;
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
+				OTHER_LDFLAGS = (
+					"-framework",
+					QuartzCore,
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = BCTextView;
 				ZERO_LINK = NO;

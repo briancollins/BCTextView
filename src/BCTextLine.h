@@ -5,6 +5,8 @@
 	CGFloat width;
 	CGFloat pos;
 	CGFloat height;
+	BOOL indented;
+	CGFloat y;
 }
 
 - (id)initWithWidth:(CGFloat)width;
@@ -14,5 +16,10 @@
 @property (readonly) CGFloat widthRemaining;
 @property (readonly) CGFloat width;
 @property (nonatomic) CGFloat height;
+@property (nonatomic) CGFloat y;
+@property (nonatomic) BOOL indented;
+
 
 @end
+
+#define kIndentWidth 10

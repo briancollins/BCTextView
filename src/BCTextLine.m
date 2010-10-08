@@ -1,12 +1,13 @@
 #import "BCTextLine.h"
 #import "BCTextNode.h"
+#import <libxml/HTMLparser.h>
 
 @interface BCTextLine ()
 @property (nonatomic, retain) NSMutableArray *stack;
 @end
 
 @implementation BCTextLine
-@synthesize stack, width, height;
+@synthesize stack, width, height, indented, y;
 
 - (id)initWithWidth:(CGFloat)aWidth {
 	if ((self = [super init])) {
@@ -18,11 +19,15 @@
 }
 
 - (CGFloat)widthRemaining {
-	return width - pos;
+	return self.width - pos;
 }
+
 
 - (void)drawAtPoint:(CGPoint)point textColor:(UIColor *)textColor linkColor:(UIColor *)linkColor {
 	int drawPos = 0;
+	if (self.indented) {
+		point.x += kIndentWidth;
+	}
 	for (BCTextNode *node in self.stack) {
 		if ([node isKindOfClass:[BCTextNode class]]) {
 			if (node.link) {
@@ -48,6 +53,14 @@
 
 - (void)setHeight:(CGFloat)aHeight { // override automaticaly discovered height
 	height = aHeight;
+}
+
+- (CGFloat)width {
+	if (self.indented) {
+		return width - (kIndentWidth * 2);
+	} else {
+		return width;
+	}
 }
 
 @end

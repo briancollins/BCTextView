@@ -2,7 +2,7 @@
 
 
 @implementation BCTextNode
-@synthesize text, font, width, link, height;
+@synthesize text, font, width, height;
 
 - (id)initWithText:(NSString *)aText font:(UIFont *)aFont width:(CGFloat)aWidth height:(CGFloat)aHeight link:(BOOL)isLink {
 	if ((self = [super init])) {
@@ -17,7 +17,7 @@
 }
 
 - (void)drawAtPoint:(CGPoint)point {
-	[self.text drawAtPoint:point withFont:self.font];
+	[self.text drawAtPoint:point withFont:self.font];	
 }
 
 @end

@@ -2,12 +2,13 @@
 #import "BCTextLine.h"
 #import "BCTextNode.h"
 #import "BCImageNode.h"
+#import "BCBlockBorder.h"
 
 typedef enum {
 	BCTextNodePlain = 0,
 	BCTextNodeBold = 1,
 	BCTextNodeItalic = 1 << 1,
-	BCTextNodeLink = 1 << 2
+	BCTextNodeLink = 1 << 2,
 } BCTextNodeAttributes;
 
 @interface BCTextFrame ()
@@ -18,7 +19,7 @@ typedef enum {
 @end
 
 @implementation BCTextFrame
-@synthesize fontSize, height, width, lines, textColor, linkColor, delegate;
+@synthesize fontSize, height, width, lines, textColor, linkColor, delegate, indented, links;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -36,15 +37,60 @@ typedef enum {
 	return self;
 }
 
-- (void)pushNewline {
+- (void)touchBeganAtPoint:(CGPoint)point {
+	for (NSValue *link in self.links) {
+		NSArray *rects = [self.links objectForKey:link];
+		for (NSValue *v in rects) {
+			if (CGRectContainsPoint([v CGRectValue], point)) {
+				touchingLink = link;
+				[self.delegate link:link touchedInRects:rects];
+				return;
+			}
+		}
+	}
+}
+
+- (void)touchEndedAtPoint:(CGPoint)point {
+	if (touchingLink) {
+		NSArray *rects = [self.links objectForKey:touchingLink];
+		for (NSValue *v in rects) {
+			if (CGRectContainsPoint([v CGRectValue], point)) {
+				[self.delegate link:touchingLink touchedUpInRects:rects];
+				
+				break;
+			}
+		}
+	}
+	touchingLink = nil;
+}
+
+- (void)touchCancelled {
+	touchingLink = nil;
+}
+
+- (void)pushNewline:(BCTextLine *)line {
+	line.indented = self.indented;
 	if (self.currentLine.height == 0) {
 		self.currentLine.height = self.fontSize;
 	}
-	height += self.currentLine.height;
-	self.currentLine = [[[BCTextLine alloc] initWithWidth:self.width] autorelease];
+	self.currentLine = line;
 }
 
-- (void)pushText:(NSString *)text withFont:(UIFont *)font link:(BOOL)link {
+- (void)pushNewline {
+	[self pushNewline:[[[BCTextLine alloc] initWithWidth:self.width] autorelease]];
+}
+
+- (void)addLink:(NSValue *)link forRect:(CGRect)rect {
+	NSMutableArray *a = [self.links objectForKey:link];
+	if (!a) {
+		a = [NSMutableArray array];
+		[self.links setObject:a forKey:link];
+	}
+	
+	[a addObject:[NSValue valueWithCGRect:rect]];
+}
+
+- (void)pushText:(NSString *)text withFont:(UIFont *)font link:(NSValue *)link {
 	CGSize size = [text sizeWithFont:font];
 
 	if (size.width > self.currentLine.widthRemaining) {
@@ -53,7 +99,7 @@ typedef enum {
 		// a word that needs to wrap
 		if (spaceRange.location == NSNotFound || spaceRange.location == text.length - 1) {
 			[self pushNewline];
-			if (size.width > self.width) { // word is too long even for its own line
+			if (size.width > self.currentLine.width) { // word is too long even for its own line
 				CGFloat partWidth;
 				NSString *textPart;
 				NSString *lastPart = nil;
@@ -63,7 +109,7 @@ typedef enum {
 					lastPart = textPart;
 					textPart = [text substringToIndex:length++];
 					partWidth = [textPart sizeWithFont:font].width;
-				} while (partWidth < self.width);
+				} while (partWidth < self.currentLine.width);
 				
 				[self pushText:lastPart withFont:font link:link];
 				[self pushText:[text substringFromIndex:length - 2] withFont:font link:link];
@@ -78,28 +124,41 @@ typedef enum {
 					  link:link];
 		}
 	} else {
-		[self.currentLine addNode:[[[BCTextNode alloc] initWithText:text font:font width:size.width height:size.height link:link] autorelease]
-						   height:size.height];
+		BCTextNode *n = [[[BCTextNode alloc] initWithText:text font:font width:size.width height:size.height link:link != nil] autorelease];
+		
+		if (link) {
+			[self addLink:link forRect:CGRectMake((self.currentLine.width - self.currentLine.widthRemaining) - 4, 
+												  self.currentLine.y - 4, 
+												  n.width + 8, n.height + 8)];
+		}
+																				  
+		[self.currentLine addNode:n height:size.height];
 	}
 }
 
-- (void)pushImage:(NSString *)src {
+- (void)pushImage:(NSString *)src linkTarget:(NSValue *)link {
 	if ([(NSObject *)self.delegate respondsToSelector:@selector(imageForURL:)]) {
 		UIImage *img = [self.delegate imageForURL:src];
 		if (img.size.width > self.currentLine.widthRemaining) {
 			[self pushNewline];
 		}
-		[self.currentLine addNode:[[[BCImageNode alloc] initWithImage:img] autorelease] height:img.size.height];
+		[self.currentLine addNode:[[[BCImageNode alloc] initWithImage:img link:link != nil] autorelease] height:img.size.height];
 		whitespaceNeeded = YES;
 	}
 }
+
+
+- (void)pushBlockBorder {
+	[self pushNewline:[[[BCBlockBorder alloc] initWithWidth:self.width] autorelease]];
+}
+
 
 - (NSString *)stripWhitespace:(char *)str {
 	char *stripped = malloc(strlen(str) + 1);
 	int i = 0;
 	
 	for (*str; *str != '\0'; *str++) {
-		if (*str == ' ' || *str == '\t' || *str == '\n') {
+		if (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r') {
 			if (whitespaceNeeded) {
 				stripped[i++] = ' ';
 				whitespaceNeeded = NO;
@@ -115,7 +174,8 @@ typedef enum {
 	return strippedString;
 }
 
-- (void)layoutNode:(xmlNode *)n attributes:(BCTextNodeAttributes)attr {
+
+- (void)layoutNode:(xmlNode *)n attributes:(BCTextNodeAttributes)attr linkTarget:(NSValue *)link {
 	if (!n) return;
 	
 	for (xmlNode *curNode = n; curNode; curNode = curNode->next) {
@@ -124,7 +184,7 @@ typedef enum {
 			
 			NSString *text = [self stripWhitespace:(char *)curNode->content];
 			
-			[self pushText:text withFont:textFont link:(attr & BCTextNodeLink)];
+			[self pushText:text withFont:textFont link:link];
 		} else {
 			BCTextNodeAttributes childrenAttr = attr;
 			
@@ -135,28 +195,49 @@ typedef enum {
 					childrenAttr |= BCTextNodeItalic; 
 				} else if (!strcmp((char *)curNode->name, "a")) {
 					childrenAttr |= BCTextNodeLink;
+					[self layoutNode:curNode->children attributes:childrenAttr linkTarget:[NSValue valueWithPointer:curNode]];
+					continue;
 				} else if (!strcmp((char *)curNode->name, "br")) {
 					[self pushNewline];
 					whitespaceNeeded = NO;
+				} else if (!strcmp((char *)curNode->name, "h4")) {
+					childrenAttr |= (BCTextNodeBold | BCTextNodeItalic);
+					[self layoutNode:curNode->children attributes:childrenAttr linkTarget:link];
+					[self pushNewline];
+					whitespaceNeeded = NO;
+					continue;
+				} else if (!strcmp((char *)curNode->name, "div")) {
+					char *class =(char *)xmlGetProp(curNode, (xmlChar *)"class");
+					if (class && !strcmp(class, "bbc-block")) {
+						[self pushBlockBorder];
+						self.indented = YES;
+						[self pushNewline];
+						[self layoutNode:curNode->children attributes:childrenAttr linkTarget:link];
+						self.indented = NO;
+						[self.lines removeLastObject];
+						[self pushBlockBorder];
+						[self pushNewline];
+						whitespaceNeeded = NO;
+						continue;
+					}
 				} else if (!strcmp((char *)curNode->name, "img")) {
 					NSString *src = [NSString stringWithUTF8String:(char *)xmlGetProp(curNode, (xmlChar *)"src")];
-					[self pushImage:src];
+					[self pushImage:src linkTarget:link];
 				}
 			}
 
-			[self layoutNode:curNode->children attributes:childrenAttr];
+			[self layoutNode:curNode->children attributes:childrenAttr linkTarget:link];
 		}
 	}
 }
 
 - (void)drawInRect:(CGRect)rect {
-	CGFloat y = 0;
 	for (BCTextLine *line in self.lines) {
-		[line drawAtPoint:CGPointMake(rect.origin.x, rect.origin.y + y) textColor:self.textColor linkColor:self.linkColor];
-		y += line.height;
-		if (y > rect.size.height) {
+		if (line.y > rect.size.height) {
 			return;
 		}
+		
+		[line drawAtPoint:CGPointMake(rect.origin.x, rect.origin.y + line.y) textColor:self.textColor linkColor:self.linkColor];
 	}
 }
 
@@ -165,16 +246,17 @@ typedef enum {
 }
 
 - (void)setCurrentLine:(BCTextLine *)aLine {
+	aLine.y = self.currentLine.y + self.currentLine.height;
 	[self.lines addObject:aLine];
 }
 
 - (void)setWidth:(CGFloat)aWidth {
+	self.links = [NSMutableDictionary dictionary];
 	width = aWidth;
 	self.lines = [NSMutableArray array];
 	self.currentLine = [[[BCTextLine alloc] initWithWidth:width] autorelease];
-	height = 0;
-	[self layoutNode:node attributes:BCTextNodePlain];
-	height += self.currentLine.height;
+	[self layoutNode:node attributes:BCTextNodePlain linkTarget:nil];
+	height = self.currentLine.y + self.currentLine.height;
 }
 
 - (void)dealloc {

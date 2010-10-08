@@ -4,9 +4,10 @@
 @implementation BCImageNode
 @synthesize image;
 
-- (id)initWithImage:(UIImage *)img {
+- (id)initWithImage:(UIImage *)img link:(BOOL)isLink {
 	if ((self = [super init])) {
 		self.image = img;
+		self.link = isLink;
 	}
 	return self;
 }
