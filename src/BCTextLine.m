@@ -18,6 +18,11 @@
 	return self;
 }
 
+- (void)dealloc {
+	self.stack = nil;
+	[super dealloc];
+}
+
 - (CGFloat)widthRemaining {
 	return self.width - pos;
 }

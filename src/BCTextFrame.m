@@ -208,20 +208,27 @@ typedef enum {
 					continue;
 				} else if (!strcmp((char *)curNode->name, "div")) {
 					char *class =(char *)xmlGetProp(curNode, (xmlChar *)"class");
-					if (class && !strcmp(class, "bbc-block")) {
-						[self pushBlockBorder];
-						self.indented = YES;
-						[self pushNewline];
-						[self layoutNode:curNode->children attributes:childrenAttr linkTarget:link];
-						self.indented = NO;
-						[self.lines removeLastObject];
-						[self pushBlockBorder];
-						[self pushNewline];
-						whitespaceNeeded = NO;
-						continue;
-					}
+					if (class) {
+						if (!strcmp(class, "bbc-block")) {
+							[self pushBlockBorder];
+							self.indented = YES;
+							[self pushNewline];
+							[self layoutNode:curNode->children attributes:childrenAttr linkTarget:link];
+							self.indented = NO;
+							[self.lines removeLastObject];
+							[self pushBlockBorder];
+							[self pushNewline];
+							whitespaceNeeded = NO;
+							free(class);
+							continue;
+						} else {
+							free(class);
+						}
+					} 
 				} else if (!strcmp((char *)curNode->name, "img")) {
-					NSString *src = [NSString stringWithUTF8String:(char *)xmlGetProp(curNode, (xmlChar *)"src")];
+					char *url = (char *)xmlGetProp(curNode, (xmlChar *)"src");
+					NSString *src = [NSString stringWithUTF8String:url];
+					free(url);
 					[self pushImage:src linkTarget:link];
 				}
 			}
@@ -264,6 +271,11 @@ typedef enum {
 		xmlFreeDoc((xmlDoc *)node);
 	
 	node = NULL;
+	self.links = nil;
+	self.textColor = nil;
+	self.linkColor = nil;
+	self.lines = nil;
+	self.currentLine = nil;
 	[super dealloc];
 }
 

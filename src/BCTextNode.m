@@ -16,6 +16,12 @@
 	return self;
 }
 
+- (void)dealloc {
+	self.text = nil;
+	self.font = nil;
+	[super dealloc];
+}
+
 - (void)drawAtPoint:(CGPoint)point {
 	[self.text drawAtPoint:point withFont:self.font];	
 }

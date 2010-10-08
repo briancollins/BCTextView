@@ -12,6 +12,11 @@
 	return self;
 }
 
+- (void)dealloc {
+	self.image = nil;
+	[super dealloc];
+}
+
 - (CGFloat)width {
 	return self.image.size.width;
 }

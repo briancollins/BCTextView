@@ -70,4 +70,9 @@
 	}
 }
 
+- (void)dealloc {
+	self.textFrame = nil;
+	[super dealloc];
+}
+
 @end
