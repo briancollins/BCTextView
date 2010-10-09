@@ -222,6 +222,22 @@ typedef enum {
 					[self pushNewline];
 					whitespaceNeeded = NO;
 					continue;
+				} else if (!strcmp((char *)curNode->name, "p")) {
+					char *class = (char *)xmlGetProp(curNode, (xmlChar *)"class");
+					if (class) {
+						if (!strcmp(class, "editedby") && curNode->children && 
+							!strcmp((char *)curNode->children->name, "span")) {
+							[self pushNewline];
+							[self pushNewline];
+							[self pushImage:@"http://i.somethingawful.com/bullet_wrench.png" linkTarget:link];
+							whitespaceNeeded = NO;
+							childrenAttr |= (BCTextNodeItalic);
+							[self layoutNode:curNode->children attributes:childrenAttr linkTarget:link];
+							free(class);
+							continue;
+						}
+						free(class);
+					}
 				} else if (!strcmp((char *)curNode->name, "div")) {
 					char *class =(char *)xmlGetProp(curNode, (xmlChar *)"class");
 					if (class) {
