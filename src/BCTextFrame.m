@@ -118,7 +118,7 @@ typedef enum {
 			[self pushNewline];
 			if (size.width > self.currentLine.width) { // word is too long even for its own line
 				CGFloat partWidth;
-				NSString *textPart;
+				NSString *textPart = nil;
 				NSString *lastPart = nil;
 				NSInteger length = 1;
 				
@@ -184,7 +184,7 @@ typedef enum {
 			stripped[i++] = *str;
 		}
 	}
-	stripped[i++] = '\0';
+	stripped[i] = '\0';
 	NSString *strippedString = [NSString stringWithUTF8String:stripped];
 	free(stripped);
 	return strippedString;
