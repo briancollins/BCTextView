@@ -154,14 +154,32 @@ typedef enum {
 }
 
 - (void)pushImage:(NSString *)src linkTarget:(NSValue *)link {
+	UIImage *img;
+	BCImageNode *n;
 	if ([(NSObject *)self.delegate respondsToSelector:@selector(imageForURL:)]) {
-		UIImage *img = [self.delegate imageForURL:src];
+		img = [self.delegate imageForURL:src];
+		n = [[[BCImageNode alloc] initWithImage:img link:YES] autorelease];
 		if (img.size.width > self.currentLine.widthRemaining) {
 			[self pushNewline];
 		}
-		[self.currentLine addNode:[[[BCImageNode alloc] initWithImage:img link:link != nil] autorelease] height:img.size.height];
-		whitespaceNeeded = YES;
+	} 
+	
+	if (!img) {
+		img = [UIImage imageNamed:@"view-image.png"];
+		n = [[[BCImageNode alloc] initWithImage:img link:NO] autorelease];
+		if (img.size.width > self.currentLine.widthRemaining) {
+			[self pushNewline];
+		}
+		[self addLink:(NSValue *)src forRect:CGRectMake((self.currentLine.width - self.currentLine.widthRemaining) - 4, 
+											  self.currentLine.y - 4, 
+											  img.size.width + 8, img.size.height + 8)];
 	}
+	
+	
+	[self.currentLine addNode:(BCTextNode *)n height:img.size.height];
+	
+	whitespaceNeeded = YES;
+	
 }
 
 

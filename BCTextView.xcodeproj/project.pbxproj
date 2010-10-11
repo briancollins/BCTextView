@@ -325,12 +325,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gastown Labs";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F40FE23B-7EF1-4A72-A588-EFD15C353650";
 				SDKROOT = iphoneos4.1;
 			};
 			name = Release;
@@ -388,8 +389,8 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Example;
-				PROVISIONING_PROFILE = "14F8674E-80D7-421F-8E19-67E352D0B1F3";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "14F8674E-80D7-421F-8E19-67E352D0B1F3";
+				PROVISIONING_PROFILE = "F40FE23B-7EF1-4A72-A588-EFD15C353650";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F40FE23B-7EF1-4A72-A588-EFD15C353650";
 				SDKROOT = iphoneos4.1;
 				ZERO_LINK = NO;
 			};
