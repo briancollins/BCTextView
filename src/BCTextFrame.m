@@ -154,7 +154,7 @@ typedef enum {
 }
 
 - (void)pushImage:(NSString *)src linkTarget:(NSValue *)link {
-	UIImage *img;
+	UIImage *img = nil;
 	BCImageNode *n;
 	if ([(NSObject *)self.delegate respondsToSelector:@selector(imageForURL:)]) {
 		img = [self.delegate imageForURL:src];
