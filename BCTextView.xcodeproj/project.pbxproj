@@ -317,7 +317,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -332,7 +332,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F40FE23B-7EF1-4A72-A588-EFD15C353650";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -346,10 +346,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = example/prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = example/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=030103";
 				OTHER_LDFLAGS = (
 					"-framework",
 					QuartzCore,
@@ -360,7 +358,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Example;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -375,10 +373,8 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = example/prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = example/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=030103";
 				OTHER_LDFLAGS = (
 					"-framework",
 					QuartzCore,
@@ -391,7 +387,7 @@
 				PRODUCT_NAME = Example;
 				PROVISIONING_PROFILE = "F40FE23B-7EF1-4A72-A588-EFD15C353650";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F40FE23B-7EF1-4A72-A588-EFD15C353650";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -404,7 +400,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = src/prefix.pch;
-				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=030103";
 				OTHER_LDFLAGS = (
@@ -413,6 +408,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = BCTextView;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -424,7 +420,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = src/prefix.pch;
-				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=030103";
 				OTHER_LDFLAGS = (
@@ -433,6 +428,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = BCTextView;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
