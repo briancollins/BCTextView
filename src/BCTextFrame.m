@@ -60,7 +60,8 @@ typedef enum {
 		for (NSValue *v in rects) {
 			if (CGRectContainsPoint([v CGRectValue], point)) {
 				touchingLink = link;
-				[self.delegate link:link touchedInRects:rects];
+				if ([(NSObject *)self.delegate respondsToSelector:@selector(link: touchedInRects:)])
+					[self.delegate link:link touchedInRects:rects];
 				return;
 			}
 		}
@@ -72,7 +73,8 @@ typedef enum {
 		NSArray *rects = [self.links objectForKey:touchingLink];
 		for (NSValue *v in rects) {
 			if (CGRectContainsPoint([v CGRectValue], point)) {
-				[self.delegate link:touchingLink touchedUpInRects:rects];
+				if ([(NSObject *)self.delegate respondsToSelector:@selector(link: touchedUpInRects:)])
+					[self.delegate link:touchingLink touchedUpInRects:rects];
 				
 				break;
 			}

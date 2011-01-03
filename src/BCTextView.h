@@ -2,6 +2,7 @@
 
 @interface BCTextView : UIView {
 	BCTextFrame *textFrame;
+	NSArray *linkHighlights;
 }
 
 - (id)initWithHTML:(NSString *)html;

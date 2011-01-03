@@ -3,11 +3,12 @@
 
 @interface BCTextView ()
 @property (nonatomic, retain) BCTextFrame *textFrame;
+@property (nonatomic, retain) NSArray *linkHighlights;
 @end
 
 
 @implementation BCTextView
-@synthesize textFrame;
+@synthesize textFrame, linkHighlights;
 
 - (id)initWithHTML:(NSString *)html {
 	if ((self = [super init])) {
@@ -62,16 +63,30 @@
 }
 
 - (void)link:(NSValue *)link touchedInRects:(NSArray *)rects {
+	for (UIView *v in self.linkHighlights) {
+		[v removeFromSuperview];
+	}
+	
+	NSMutableArray *views = [NSMutableArray arrayWithCapacity:rects.count];
 	for (NSValue *v in rects) {
 		CGRect r = [v CGRectValue];
-		UIView *v = [[[UIView alloc] initWithFrame:r] autorelease];
-		v.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
-		[self addSubview:v];
+		UIView *view = [[[UIView alloc] initWithFrame:r] autorelease];
+		view.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
+		[self addSubview:view];
+		[views addObject:view];
+	}
+	self.linkHighlights = views;
+}
+
+- (void)link:(NSValue *)link touchedUpInRects:(NSArray *)rects {
+	for (UIView *v in self.linkHighlights) {
+		[v removeFromSuperview];
 	}
 }
 
 - (void)dealloc {
 	self.textFrame = nil;
+	self.linkHighlights = nil;
 	[super dealloc];
 }
 
